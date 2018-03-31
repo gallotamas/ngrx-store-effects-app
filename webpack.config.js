@@ -94,8 +94,14 @@ module.exports = {
     },
     publicPath: '/build/',
     port: 3000,
+    proxy: {
+        '/api': {
+          target: 'https://staging.falcon.io',
+          secure: false
+        }
+    },
     setup: function(app) {
-      app.use('/api', jsonServer.router('db.json'));
+      app.use('/jsonApi', jsonServer.router('db.json'));
     },
   },
   devtool: 'sourcemap',
