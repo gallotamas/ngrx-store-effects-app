@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
@@ -39,6 +39,13 @@ export const ROUTES: Routes = [
   },
 ];
 
+// services
+import { AuthService } from './services/auth.service';
+
+function initApp(authService: AuthService) {
+  return () => authService.authenticate();
+}
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -50,7 +57,11 @@ export const ROUTES: Routes = [
     StoreRouterConnectingModule,
     environment.development ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
+  providers: [
+    AuthService,
+    { provide: RouterStateSerializer, useClass: CustomSerializer },
+    { provide: APP_INITIALIZER, useFactory: initApp, deps: [AuthService], multi: true }
+  ],
   declarations: [AppComponent],
   bootstrap: [AppComponent],
 })
