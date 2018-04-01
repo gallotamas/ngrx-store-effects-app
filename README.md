@@ -89,7 +89,7 @@ export class Interceptor implements HttpInterceptor {
 
 If you have a look at the network tab now you can see that the bearer token gets sent in every request.
 
-There is one issue with the above implementation though. The token is only valid for a short time (5 minutes) and you have to renew it before it gets expired.
+There is one issue with the above implementation though. The token is only valid for a short time (5 minutes) and you have to renew it before it gets expired. So let's make sure that we update the token before it gets expired.
 
 ```ts
 // interceptor.service.ts
@@ -119,7 +119,8 @@ Let's add a logout link to the main navigation bar.
 
 ```ts
 // app.component.ts
-
+import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 @Component({
     // ...
     <a (click)="logout()" href="#">Logout</a>
