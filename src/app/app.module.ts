@@ -1,6 +1,6 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -41,6 +41,7 @@ export const ROUTES: Routes = [
 
 // services
 import { AuthService } from './services/auth.service';
+import { Interceptor } from './services/interceptor.service';
 
 function initApp(authService: AuthService) {
   return () => authService.authenticate();
@@ -60,7 +61,8 @@ function initApp(authService: AuthService) {
   providers: [
     AuthService,
     { provide: RouterStateSerializer, useClass: CustomSerializer },
-    { provide: APP_INITIALIZER, useFactory: initApp, deps: [AuthService], multi: true }
+    { provide: APP_INITIALIZER, useFactory: initApp, deps: [AuthService], multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true }
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent],
