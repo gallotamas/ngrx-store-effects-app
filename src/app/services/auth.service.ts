@@ -11,12 +11,13 @@ const authConfig: AuthConfiguration = {
 export class AuthService {
     private _instance: FalconAuthInstance;
 
-    get instance() { return this._instance; }
+    get instance(): FalconAuthInstance { return this._instance; }
 
-    authenticate() {
+    authenticate(): Promise<FalconAuthInstance> {
         return authenticateWithFalcon(authConfig).then((auth) => {
             console.log(auth);
             this._instance = auth;
+            return auth;
         });
     }
 }
