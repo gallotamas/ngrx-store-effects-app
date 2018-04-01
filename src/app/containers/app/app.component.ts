@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,7 @@ import { Component } from '@angular/core';
     <div class="app__content">
       <div class="app__nav">
         <a routerLink="products" routerLinkActive="active">Products</a>
+        <a (click)="logout()" href="#">Logout</a>
       </div>
       <div class="app__container">
         <router-outlet></router-outlet>
@@ -22,4 +24,10 @@ import { Component } from '@angular/core';
   </div>
   `,
 })
-export class AppComponent {}
+export class AppComponent {
+    constructor(private authService: AuthService) {}
+
+    logout() {
+        this.authService.instance.logout();
+    }
+}
