@@ -61,10 +61,10 @@ function initApp(authService: AuthService) {
 })
 export class AppModule {}
 ```
-At this point you get redirected to the login page and you have to provide valid credentials to be able to access the application. However, for backend services the user is still not authenticated because the bearer token does not get sent back in xhr requests.
+At this point you get redirected to the login page and you have to provide valid credentials to be able to access the application. However, for backend services the user is still don't seem to be authenticated because the bearer token does not get sent back in xhr requests.
 
 ## 3. Create an interceptor
-The easiest way to send the bearer token in every request is to create an http interceptor and add the Authorization header there.
+The easiest way to send the bearer token in every request is by creating an http interceptor and set the Authorization header there.
 
 ```ts
 // interceptor.service.ts
@@ -87,7 +87,7 @@ export class Interceptor implements HttpInterceptor {
 }
 ```
 
-As a next step you have to register the interceptor.
+Now you have to register the interceptor.
 
 ```ts
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
