@@ -87,7 +87,23 @@ export class Interceptor implements HttpInterceptor {
 }
 ```
 
-If you have a look at the network tab now you can see that the bearer token gets sent in every request.
+As a next step you have to register the interceptor.
+
+```ts
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+@NgModule({
+    // ...
+    providers: [
+        // ...
+        { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true }
+    ],
+    // ...
+})
+export class AppModule {}
+```
+
+If you have a look at the network tab you can see now that the bearer token gets sent in every request.
 
 There is one issue with the above implementation though. The token is only valid for a short time (5 minutes) and you have to renew it before it gets expired. So let's make sure that we update the token before it gets expired.
 
